@@ -44,8 +44,8 @@ export default function AppSidebar() {
             <Image 
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf-6gTmS3DsuKWvwRdYlkbF5ezcQWzxX-TBw&s" 
               alt="Veritas Platform Logo"
-              width={100}
-              height={100}
+              width={80}
+              height={80}
               className="h-auto"
             />
         </div>
