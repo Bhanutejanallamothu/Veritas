@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Shield, LayoutDashboard, Car, User, Search, FileText, Users, LogOut, FileClock } from "lucide-react";
+import Image from "next/image";
 
 type NavItem = {
   href: string;
@@ -39,11 +40,14 @@ export default function AppSidebar() {
   return (
     <>
       <SidebarHeader>
-        <div className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-sidebar-accent">
-                 <Shield className="h-6 w-6 text-sidebar-foreground" />
-            </div>
-            <span className="text-lg font-semibold font-headline">Veritas</span>
+        <div className="flex items-center justify-center gap-2 p-4">
+            <Image 
+              src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Andhra_Pradesh_Police_logo.png" 
+              alt="Veritas Platform Logo"
+              width={100}
+              height={100}
+              className="h-auto"
+            />
         </div>
       </SidebarHeader>
       
