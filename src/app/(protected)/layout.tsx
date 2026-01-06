@@ -52,12 +52,14 @@ function ProtectedLayoutContent({ children }: { children: React.ReactNode }) {
       <Sidebar>
         <AppSidebar />
       </Sidebar>
-      <main className="flex-1 overflow-y-auto bg-background">
+      <div className="flex flex-col flex-1">
           <AppHeader />
-          <div className="p-4 sm:p-6 lg:p-8">
-            {children}
-          </div>
-      </main>
+          <main className="flex-1 overflow-y-auto bg-background">
+            <div className="p-4 sm:p-6 lg:p-8">
+                {children}
+            </div>
+          </main>
+      </div>
     </div>
   );
 }
