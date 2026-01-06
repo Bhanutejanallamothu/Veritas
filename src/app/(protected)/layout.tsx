@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/auth-context';
-import { SidebarProvider, Sidebar, SidebarInset } from '@/components/ui/sidebar';
+import { Sidebar } from '@/components/ui/sidebar';
 import AppSidebar from '@/components/app-sidebar';
 import AppHeader from '@/components/app-header';
 import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
 
 export default function ProtectedLayout({
   children,
@@ -15,6 +16,8 @@ export default function ProtectedLayout({
 }) {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+
 
   useEffect(() => {
     if (!loading && !user) {
@@ -47,16 +50,20 @@ export default function ProtectedLayout({
   }
 
   return (
-    <SidebarProvider>
-      <Sidebar collapsible="icon">
+    <div
+      className={cn(
+        "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 h-screen mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden"
+      )}
+    >
+      <Sidebar open={open} setOpen={setOpen}>
         <AppSidebar />
       </Sidebar>
-      <SidebarInset>
-        <AppHeader />
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 bg-background">
-          {children}
-        </main>
-      </SidebarInset>
-    </SidebarProvider>
+      <main className="flex-1 overflow-y-auto bg-background">
+          <AppHeader />
+          <div className="p-4 sm:p-6 lg:p-8">
+            {children}
+          </div>
+      </main>
+    </div>
   );
 }

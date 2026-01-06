@@ -13,8 +13,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LogOut, User as UserIcon } from "lucide-react";
-import { SidebarTrigger } from "./ui/sidebar";
 import { ThemeToggle } from "./theme-toggle";
+import { useSidebar } from "./ui/sidebar";
+import { Menu } from "lucide-react";
 
 const pathToTitle: { [key: string]: string } = {
     '/dashboard': 'Dashboard',
@@ -35,6 +36,8 @@ export default function AppHeader() {
   const { user, logout } = useAuth();
   const pathname = usePathname();
   const title = getTitleFromPath(pathname);
+  const { setOpen, open } = useSidebar();
+
 
   const getInitials = (name: string) => {
     return name.split(' ').map(n => n[0]).join('');
@@ -43,7 +46,10 @@ export default function AppHeader() {
   return (
     <header className="flex h-16 items-center justify-between border-b bg-card px-4 md:px-6">
         <div className="flex items-center gap-4">
-            <SidebarTrigger className="md:hidden" />
+             <Menu
+                className="text-neutral-800 dark:text-neutral-200 cursor-pointer md:hidden"
+                onClick={() => setOpen(!open)}
+            />
             <h1 className="text-lg font-semibold md:text-xl font-headline">{title}</h1>
         </div>
       

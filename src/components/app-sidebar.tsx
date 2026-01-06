@@ -3,16 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth, UserRole } from "@/context/auth-context";
-import {
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarMenuButton,
-  SidebarFooter,
-} from "@/components/ui/sidebar";
+import { SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Shield, LayoutDashboard, Car, User, Search, FileText, Users, LogOut, FileClock } from "lucide-react";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { useSidebar } from "./ui/sidebar";
+
 
 type NavItem = {
   href: string;
@@ -31,52 +28,99 @@ const navItems: NavItem[] = [
   { href: "/users/manage", label: "User Management", icon: Users, roles: ["admin"] },
 ];
 
+const Logo = () => {
+  return (
+    <Link
+      href="#"
+      className="font-normal flex space-x-2 items-center text-sm text-black dark:text-white py-1 relative z-20"
+    >
+      <Image 
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf-6gTmS3DsuKWvwRdYlkbF5ezcQWzxX-TBw&s" 
+        alt="Veritas Platform Logo"
+        width={32}
+        height={32}
+        className="h-auto"
+      />
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="font-medium text-black dark:text-white whitespace-pre"
+      >
+        Veritas Platform
+      </motion.span>
+    </Link>
+  );
+};
+
+const LogoIcon = () => {
+  return (
+    <Link
+      href="#"
+      className="font-normal flex space-x-2 items-center text-sm text-black dark:text-white py-1 relative z-20"
+    >
+      <Image 
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf-6gTmS3DsuKWvwRdYlkbF5ezcQWzxX-TBw&s" 
+        alt="Veritas Platform Logo"
+        width={32}
+        height={32}
+        className="h-auto"
+      />
+    </Link>
+  );
+};
+
+
 export default function AppSidebar() {
   const { user, logout } = useAuth();
-  const pathname = usePathname();
+  const { open } = useSidebar();
 
   if (!user) return null;
 
+  const userLinks = navItems.filter(item => item.roles.includes(user.role));
+
+  const getInitials = (name: string) => {
+    return name.split(' ').map(n => n[0]).join('');
+  }
+
   return (
-    <>
-      <SidebarHeader>
-        <div className="flex items-center justify-center gap-2 p-4">
-            <Image 
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf-6gTmS3DsuKWvwRdYlkbF5ezcQWzxX-TBw&s" 
-              alt="Veritas Platform Logo"
-              width={80}
-              height={80}
-              className="h-auto"
-            />
+    <SidebarBody className="justify-between gap-10">
+        <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+            <div className="px-2 py-4">
+                {open ? <Logo /> : <LogoIcon />}
+            </div>
+            <div className="mt-8 flex flex-col gap-2">
+            {userLinks.map((link, idx) => (
+                <SidebarLink key={idx} link={{
+                    href: link.href,
+                    label: link.label,
+                    icon: <link.icon className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+                }} />
+            ))}
+            </div>
         </div>
-      </SidebarHeader>
-      
-      <SidebarMenu className="flex-1 p-2">
-        {navItems
-          .filter(item => item.roles.includes(user.role))
-          .map(item => (
-            <SidebarMenuItem key={item.href}>
-              <Link href={item.href} passHref>
-                <SidebarMenuButton
-                    isActive={pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href))}
-                    asChild
-                >
-                  <div>
-                    <item.icon />
-                    <span>{item.label}</span>
-                  </div>
-                </SidebarMenuButton>
-              </Link>
-            </SidebarMenuItem>
-          ))}
-      </SidebarMenu>
-      
-      <SidebarFooter>
-        <Button variant="ghost" className="justify-start gap-2 text-sidebar-foreground/70 hover:text-sidebar-foreground" onClick={logout}>
-          <LogOut className="h-4 w-4" />
-          <span>Logout</span>
-        </Button>
-      </SidebarFooter>
-    </>
+        <div>
+            <SidebarLink
+            link={{
+                label: user.displayName,
+                href: "#",
+                icon: (
+                <AvatarImage
+                    src={`https://avatar.vercel.sh/${user.email}.png`}
+                    className="h-7 w-7 flex-shrink-0 rounded-full"
+                />
+                ),
+            }}
+            />
+             <div onClick={logout} className="cursor-pointer">
+                <SidebarLink
+                    link={{
+                        label: "Logout",
+                        href: "/login",
+                        icon: <LogOut className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
+                    }}
+                />
+            </div>
+        </div>
+    </SidebarBody>
   );
 }
