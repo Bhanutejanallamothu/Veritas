@@ -34,11 +34,11 @@ const Logo = () => {
       className="font-normal flex space-x-2 items-center text-sm text-black dark:text-white py-1 relative z-20"
     >
       <Image 
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf-6gTmS3DsuKWvwRdYlkbF5ezcQWzxX-TBw&s" 
+        src="https://ik.imagekit.io/bhanuteja110/unnamed%20(1).jpg" 
         alt="Veritas Platform Logo"
         width={24}
         height={24}
-        className="h-auto"
+        className="h-auto rounded-full"
       />
       <motion.span
         initial={{ opacity: 0 }}
@@ -58,11 +58,11 @@ const LogoIcon = () => {
       className="font-normal flex space-x-2 items-center text-sm text-black dark:text-white py-1 relative z-20"
     >
       <Image 
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf-6gTmS3DsuKWvwRdYlkbF5ezcQWzxX-TBw&s" 
+        src="https://ik.imagekit.io/bhanuteja110/unnamed%20(1).jpg" 
         alt="Veritas Platform Logo"
         width={24}
         height={24}
-        className="h-auto"
+        className="h-auto rounded-full"
       />
     </Link>
   );
