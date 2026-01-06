@@ -1,3 +1,34 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "vehicle-1",
+      "description": "A silver sedan parked on a city street.",
+      "imageUrl": "https://images.unsplash.com/photo-1645596105558-a6434c16fbc3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxzaWx2ZXIlMjBzZWRhbnxlbnwwfHx8fDE3Njc2MTIzMjJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "silver sedan"
+    },
+    {
+      "id": "vehicle-2",
+      "description": "A blue truck on a highway.",
+      "imageUrl": "https://images.unsplash.com/photo-1687088351621-c70a25d92e44?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxibHVlJTIwdHJ1Y2t8ZW58MHx8fHwxNzY3NzE2NzU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "blue truck"
+    },
+    {
+      "id": "vehicle-3",
+      "description": "A red hatchback in a parking lot.",
+      "imageUrl": "https://images.unsplash.com/photo-1641825932091-73f78062d625?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxyZWQlMjBoYXRjaGJhY2t8ZW58MHx8fHwxNzY3NjI0NzY0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "red hatchback"
+    },
+    {
+      "id": "driver-photo-1",
+      "description": "Portrait of a person.",
+      "imageUrl": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxwZXJzb24lMjBwb3J0cmFpdHxlbnwwfHx8fDE3Njc2MzU5OTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person portrait"
+    },
+    {
+      "id": "cctv-1",
+      "description": "CCTV footage of a car at an intersection.",
+      "imageUrl": "https://images.unsplash.com/photo-1713173642147-30cbbdb176d5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjY3R2JTIwY2FyfGVufDB8fHx8MTc2NzcxNjc1OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cctv car"
+    }
+  ]
 }
