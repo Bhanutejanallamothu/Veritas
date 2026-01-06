@@ -7,7 +7,7 @@ import { LayoutDashboard, Car, User, Search, FileText, Users, LogOut, FileClock 
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useSidebar } from "./ui/sidebar";
-import { AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 
 type NavItem = {
@@ -77,6 +77,10 @@ export default function AppSidebar() {
 
   const userLinks = navItems.filter(item => item.roles.includes(user.role));
 
+  const getInitials = (name: string) => {
+    return name.split(' ').map(n => n[0]).join('');
+  }
+
   return (
     <SidebarBody className="justify-between gap-10">
         <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
@@ -99,10 +103,12 @@ export default function AppSidebar() {
                 label: user.displayName,
                 href: "#",
                 icon: (
-                <AvatarImage
-                    src={`https://avatar.vercel.sh/${user.email}.png`}
-                    className="h-7 w-7 flex-shrink-0 rounded-full"
-                />
+                  <Avatar className="h-7 w-7 flex-shrink-0 rounded-full">
+                    <AvatarImage
+                        src={`https://avatar.vercel.sh/${user.email}.png`}
+                    />
+                    <AvatarFallback>{getInitials(user.displayName)}</AvatarFallback>
+                  </Avatar>
                 ),
             }}
             />
