@@ -42,7 +42,7 @@ export default function AppSidebar() {
       <SidebarHeader>
         <div className="flex items-center justify-center gap-2 p-4">
             <Image 
-              src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Andhra_Pradesh_Police_logo.png" 
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf-6gTmS3DsuKWvwRdYlkbF5ezcQWzxX-TBw&s" 
               alt="Veritas Platform Logo"
               width={100}
               height={100}
