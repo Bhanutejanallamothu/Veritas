@@ -1,14 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useAuth, UserRole } from "@/context/auth-context";
 import { SidebarBody, SidebarLink } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
-import { Shield, LayoutDashboard, Car, User, Search, FileText, Users, LogOut, FileClock } from "lucide-react";
+import { LayoutDashboard, Car, User, Search, FileText, Users, LogOut, FileClock } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useSidebar } from "./ui/sidebar";
+import { AvatarImage } from "@/components/ui/avatar";
 
 
 type NavItem = {
@@ -37,8 +36,8 @@ const Logo = () => {
       <Image 
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf-6gTmS3DsuKWvwRdYlkbF5ezcQWzxX-TBw&s" 
         alt="Veritas Platform Logo"
-        width={32}
-        height={32}
+        width={24}
+        height={24}
         className="h-auto"
       />
       <motion.span
@@ -61,8 +60,8 @@ const LogoIcon = () => {
       <Image 
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf-6gTmS3DsuKWvwRdYlkbF5ezcQWzxX-TBw&s" 
         alt="Veritas Platform Logo"
-        width={32}
-        height={32}
+        width={24}
+        height={24}
         className="h-auto"
       />
     </Link>
@@ -77,10 +76,6 @@ export default function AppSidebar() {
   if (!user) return null;
 
   const userLinks = navItems.filter(item => item.roles.includes(user.role));
-
-  const getInitials = (name: string) => {
-    return name.split(' ').map(n => n[0]).join('');
-  }
 
   return (
     <SidebarBody className="justify-between gap-10">
