@@ -36,8 +36,8 @@ const Logo = () => {
       <Image 
         src="https://ik.imagekit.io/bhanuteja110/unnamed%20(1).jpg" 
         alt="Veritas Platform Logo"
-        width={24}
-        height={24}
+        width={32}
+        height={32}
         className="h-auto rounded-full"
       />
       <motion.span
@@ -60,8 +60,8 @@ const LogoIcon = () => {
       <Image 
         src="https://ik.imagekit.io/bhanuteja110/unnamed%20(1).jpg" 
         alt="Veritas Platform Logo"
-        width={24}
-        height={24}
+        width={32}
+        height={32}
         className="h-auto rounded-full"
       />
     </Link>
