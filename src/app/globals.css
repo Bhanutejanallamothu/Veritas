@@ -86,3 +86,45 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Lever Switch CSS */
+.toggle-container {
+  @apply relative w-16 h-16 cursor-pointer;
+}
+
+.toggle-input {
+  @apply absolute w-full h-full opacity-0 cursor-pointer;
+}
+
+.toggle-handle-wrapper {
+  @apply pointer-events-none absolute w-full h-full flex items-center justify-center transition-transform duration-300 transform;
+  transform-origin: 25% center;
+}
+
+.toggle-input:checked ~ .toggle-handle-wrapper {
+  @apply transform -rotate-90;
+}
+
+.toggle-handle {
+  @apply relative w-2 h-10 rounded-full bg-accent shadow-md;
+}
+
+.toggle-handle-knob {
+  @apply absolute -top-1 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary shadow-inner;
+}
+
+.toggle-handle-bar-wrapper {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-1/2;
+}
+
+.toggle-handle-bar {
+  @apply w-full h-full bg-accent;
+}
+
+.toggle-base {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-muted shadow-inner;
+}
+
+.toggle-base-inside {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background;
+}
