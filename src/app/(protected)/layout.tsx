@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useEffect, useState } from 'react';
@@ -62,9 +63,9 @@ export default function ProtectedLayout({
                 <Sidebar>
                     <AppSidebar />
                 </Sidebar>
-                <div className="flex flex-1 flex-col">
+                <div className="flex flex-1 flex-col overflow-y-auto">
                     <AppHeader />
-                    <main className="flex-1 overflow-y-auto">
+                    <main className="flex-1">
                         <div className="p-4 sm:p-6 lg:p-8">
                             {children}
                         </div>
