@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Upload, FileQuestion, Loader2, AlertTriangle } from "lucide-react";
 import { imageBasedVehicleSearch, type ImageBasedVehicleSearchOutput } from "@/ai/flows/image-based-vehicle-search";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ImageSearchPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -79,7 +80,7 @@ export default function ImageSearchPage() {
               <div className="flex items-center justify-center w-full">
                   <label htmlFor="dropzone-file" className="relative flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-muted/50 hover:bg-muted">
                       {filePreview ? (
-                          <Image src={filePreview} alt="Uploaded image preview" layout="fill" objectFit="contain" className="rounded-lg p-2"/>
+                          <Image src={filePreview} alt="Uploaded image preview" fill objectFit="contain" className="rounded-lg p-2"/>
                       ) : (
                           <div className="flex flex-col items-center justify-center pt-5 pb-6">
                               <Upload className="w-8 h-8 mb-4 text-muted-foreground" />
