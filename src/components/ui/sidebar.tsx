@@ -1,3 +1,4 @@
+
 "use client";
 
 import { cn } from "@/lib/utils";
@@ -114,18 +115,6 @@ export const MobileSidebar = ({
   const { open, setOpen } = useSidebar();
   return (
     <>
-      <div
-        className={cn(
-          "flex items-center justify-between p-4 md:hidden fixed top-0 left-0 w-full z-50",
-          className
-        )}
-        {...props}
-      >
-        <Menu
-          className="text-neutral-800 dark:text-neutral-200"
-          onClick={() => setOpen(!open)}
-        />
-      </div>
       <AnimatePresence>
         {open && (
           <motion.div
@@ -164,10 +153,11 @@ export const SidebarLink = ({
   className?: string;
   props?: LinkProps;
 }) => {
-  const { open, animate } = useSidebar();
+  const { open, animate, setOpen } = useSidebar();
   return (
     <Link
       href={link.href}
+      onClick={() => setOpen(false)}
       className={cn(
         "flex items-center justify-start gap-2 group/sidebar py-2",
         className
