@@ -35,10 +35,10 @@ export function GradientDots({
 				backgroundImage: `
           radial-gradient(circle at 50% 50%, transparent 1.5px, ${backgroundColor} 0 ${dotSize}px, transparent ${dotSize}px),
           radial-gradient(circle at 50% 50%, transparent 1.5px, ${backgroundColor} 0 ${dotSize}px, transparent ${dotSize}px),
-          radial-gradient(circle at 50% 50%, hsl(0 0% 100% / 0.1), transparent 40%),
-          radial-gradient(circle at 50% 50%, hsl(0 0% 50% / 0.1), transparent 40%),
-          radial-gradient(circle at 50% 50%, hsl(210 40% 60% / 0.2), transparent 40%),
-          radial-gradient(ellipse at 50% 50%, hsl(210 40% 60% / 0.1), transparent 60%)
+          radial-gradient(circle at 50% 50%, hsl(0 0% 100% / 0.2), transparent 40%),
+          radial-gradient(circle at 50% 50%, hsl(0 0% 50% / 0.2), transparent 40%),
+          radial-gradient(circle at 50% 50%, hsl(210 40% 60% / 0.4), transparent 40%),
+          radial-gradient(ellipse at 50% 50%, hsl(210 40% 60% / 0.2), transparent 60%)
         `,
 				backgroundSize: `
           ${spacing}px ${hexSpacing}px,
