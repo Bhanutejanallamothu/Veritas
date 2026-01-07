@@ -35,14 +35,14 @@ const Logo = () => {
       <Image 
         src="https://ik.imagekit.io/bhanuteja110/ChatGPT%20Image%20Jan%206,%202026,%2011_09_33%20PM.png" 
         alt="Veritas Platform Logo"
-        width={60}
-        height={60}
+        width={40}
+        height={40}
         className="h-auto rounded-full"
       />
       <motion.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="font-medium text-sidebar-foreground whitespace-pre"
+        className="font-medium text-black dark:text-white whitespace-pre"
       >
         Veritas Platform
       </motion.span>
@@ -59,8 +59,8 @@ const LogoIcon = () => {
       <Image 
         src="https://ik.imagekit.io/bhanuteja110/ChatGPT%20Image%20Jan%206,%202026,%2011_09_33%20PM.png" 
         alt="Veritas Platform Logo"
-        width={80}
-        height={80}
+        width={42}
+        height={42}
         className="h-auto rounded-full"
       />
     </Link>
@@ -91,7 +91,7 @@ export default function AppSidebar() {
                 <SidebarLink key={idx} link={{
                     href: link.href,
                     label: link.label,
-                    icon: <link.icon className="text-sidebar-foreground h-5 w-5 flex-shrink-0" />
+                    icon: <link.icon className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
                 }} />
             ))}
             </div>
@@ -116,7 +116,7 @@ export default function AppSidebar() {
                     link={{
                         label: "Logout",
                         href: "/login",
-                        icon: <LogOut className="text-sidebar-foreground h-5 w-5 flex-shrink-0" />,
+                        icon: <LogOut className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
                     }}
                 />
             </div>
