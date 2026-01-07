@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Table,
   TableBody,
@@ -14,11 +16,11 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
-const actionIcons = {
-    login: <LogIn className="h-3 w-3 mr-1.5" />,
-    upload: <Upload className="h-3 w-3 mr-1.5" />,
-    search: <Search className="h-3 w-3 mr-1.5" />,
-    view: <FileText className="h-3 w-3 mr-1.5" />,
+const actionIcons: Record<string, React.ReactElement> = {
+    login: <LogIn className="h-3 w-3" />,
+    upload: <Upload className="h-3 w-3" />,
+    search: <Search className="h-3 w-3" />,
+    view: <FileText className="h-3 w-3" />,
 };
 
 const AuditFilters = () => (
@@ -77,7 +79,7 @@ export default function AuditLogsPage() {
                         {logs.map((log) => (
                             <TableRow key={log.id}>
                                 <TableCell>
-                                    <Badge variant="outline" className="capitalize flex items-center w-fit">
+                                    <Badge variant="outline" className="capitalize flex items-center gap-1.5 w-fit">
                                         {actionIcons[log.actionType]}
                                         {log.actionType}
                                     </Badge>
