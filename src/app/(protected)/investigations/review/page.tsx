@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Table,
   TableBody,
@@ -6,21 +8,42 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { mockInvestigations } from "@/lib/placeholder-data";
 import Image from "next/image";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 export default function ReviewSearchesPage() {
-    const investigations = mockInvestigations;
+    const [investigations, setInvestigations] = useState(mockInvestigations);
+
+    const handleMarkAsReviewed = (id: string) => {
+        setInvestigations(prev => prev.map(inv => inv.id === id ? {...inv, status: 'Reviewed'} : inv));
+    };
+
+    const getStatusBadgeClass = (status: 'Pending Review' | 'Reviewed') => {
+        return status === 'Reviewed' ? 'bg-green-800/80 text-green-100' : 'bg-amber-800/80 text-amber-100';
+    }
 
     return (
         <Card>
             <CardHeader>
                 <CardTitle>Review Investigation Searches</CardTitle>
                 <CardDescription>
-                    Review AI-assisted searches initiated by officers.
+                    Review AI-assisted searches initiated by officers. All actions are logged.
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -52,14 +75,38 @@ export default function ReviewSearchesPage() {
                                 <TableCell>{inv.uploadedBy}</TableCell>
                                 <TableCell>{inv.timestamp.toLocaleDateString()}</TableCell>
                                 <TableCell>
-                                    <Badge variant={inv.status === 'Reviewed' ? 'secondary' : 'default'}>
+                                    <Badge variant="outline" className={cn("border-transparent", getStatusBadgeClass(inv.status))}>
                                         {inv.status}
                                     </Badge>
                                 </TableCell>
                                 <TableCell className="text-right">
-                                    <Button variant="outline" size="sm" disabled={inv.status === 'Reviewed'}>
-                                        {inv.status === 'Reviewed' ? 'Reviewed' : 'Mark as Reviewed'}
-                                    </Button>
+                                    {inv.status !== 'Reviewed' ? (
+                                        <AlertDialog>
+                                            <AlertDialogTrigger asChild>
+                                                <Button variant="outline" size="sm">
+                                                    Mark as Reviewed
+                                                </Button>
+                                            </AlertDialogTrigger>
+                                            <AlertDialogContent>
+                                                <AlertDialogHeader>
+                                                    <AlertDialogTitle>Confirm Action</AlertDialogTitle>
+                                                    <AlertDialogDescription>
+                                                        This action will mark the investigation as reviewed and will be logged with your officer ID. Are you sure you want to proceed?
+                                                    </AlertDialogDescription>
+                                                </AlertDialogHeader>
+                                                <AlertDialogFooter>
+                                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                    <AlertDialogAction onClick={() => handleMarkAsReviewed(inv.id)}>
+                                                        Confirm
+                                                    </AlertDialogAction>
+                                                </AlertDialogFooter>
+                                            </AlertDialogContent>
+                                        </AlertDialog>
+                                    ) : (
+                                         <Button variant="outline" size="sm" disabled>
+                                            Reviewed
+                                        </Button>
+                                    )}
                                 </TableCell>
                             </TableRow>
                         ))}
