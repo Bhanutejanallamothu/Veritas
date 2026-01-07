@@ -28,6 +28,14 @@ const FormSection = ({ title, children }: { title: string; children: React.React
 const RequiredIndicator = () => <span className="text-destructive ml-1">*</span>
 
 export default function RegisterVehiclePage() {
+  const [registrationNumber, setRegistrationNumber] = useState('');
+  const [model, setModel] = useState('');
+  const [vehicleType, setVehicleType] = useState('');
+  const [color, setColor] = useState('');
+  const [identifyingMarks, setIdentifyingMarks] = useState('');
+  const [status, setStatus] = useState('');
+  const [operatingArea, setOperatingArea] = useState('');
+  const [linkedDrivers, setLinkedDrivers] = useState('');
   const [files, setFiles] = useState<File[]>([]);
   const [filePreviews, setFilePreviews] = useState<string[]>([]);
   const [isDragging, setIsDragging] = useState(false);
@@ -91,7 +99,17 @@ export default function RegisterVehiclePage() {
         title: "Vehicle Registered",
         description: "The new vehicle has been successfully saved to the system.",
       });
-      // Optionally reset form state here
+      // Reset form state
+      setRegistrationNumber('');
+      setModel('');
+      setVehicleType('');
+      setColor('');
+      setIdentifyingMarks('');
+      setStatus('');
+      setOperatingArea('');
+      setLinkedDrivers('');
+      setFiles([]);
+      setFilePreviews([]);
   }
 
   return (
@@ -107,18 +125,18 @@ export default function RegisterVehiclePage() {
           <FormSection title="Vehicle Identity">
             <div className="space-y-2">
               <Label htmlFor="registrationNumber">Registration Number <RequiredIndicator /></Label>
-              <Input id="registrationNumber" placeholder="e.g., ABC-123" required/>
+              <Input id="registrationNumber" placeholder="e.g., ABC-123" required value={registrationNumber} onChange={(e) => setRegistrationNumber(e.target.value)} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="model">Make and Model <RequiredIndicator /></Label>
-              <Input id="model" placeholder="e.g., Toyota Camry 2022" required/>
+              <Input id="model" placeholder="e.g., Toyota Camry 2022" required value={model} onChange={(e) => setModel(e.target.value)} />
             </div>
           </FormSection>
 
           <FormSection title="Physical Characteristics">
             <div className="space-y-2">
               <Label htmlFor="vehicleType">Vehicle Type <RequiredIndicator /></Label>
-              <Select required>
+              <Select required value={vehicleType} onValueChange={setVehicleType}>
                 <SelectTrigger id="vehicleType">
                   <SelectValue placeholder="Select vehicle type" />
                 </SelectTrigger>
@@ -131,18 +149,18 @@ export default function RegisterVehiclePage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="color">Color <RequiredIndicator /></Label>
-              <Input id="color" placeholder="e.g., Metallic Blue" required/>
+              <Input id="color" placeholder="e.g., Metallic Blue" required value={color} onChange={(e) => setColor(e.target.value)} />
             </div>
              <div className="space-y-2 md:col-span-2">
               <Label htmlFor="identifyingMarks">Identifying Marks</Label>
-              <Textarea id="identifyingMarks" placeholder="e.g., Dent on the rear bumper, custom sticker on windshield..." />
+              <Textarea id="identifyingMarks" placeholder="e.g., Dent on the rear bumper, custom sticker on windshield..." value={identifyingMarks} onChange={(e) => setIdentifyingMarks(e.target.value)} />
             </div>
           </FormSection>
           
           <FormSection title="Operational Information">
             <div className="space-y-2">
               <Label htmlFor="status">Status <RequiredIndicator /></Label>
-              <Select required>
+              <Select required value={status} onValueChange={setStatus}>
                 <SelectTrigger id="status">
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
@@ -155,7 +173,7 @@ export default function RegisterVehiclePage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="operatingArea">Operating Area</Label>
-              <Input id="operatingArea" placeholder="e.g., Downtown District" />
+              <Input id="operatingArea" placeholder="e.g., Downtown District" value={operatingArea} onChange={(e) => setOperatingArea(e.target.value)} />
             </div>
           </FormSection>
 
@@ -200,7 +218,10 @@ export default function RegisterVehiclePage() {
           <FormSection title="Associations">
              <div className="space-y-2 md:col-span-2">
                 <Label htmlFor="linkedDrivers">Link Drivers</Label>
-                {/* In a real app this would be an async search select component */}
+                <Input id="linkedDrivers" placeholder="e.g., John Doe (D12345), Jane Smith (D67890)" value={linkedDrivers} onChange={(e) => setLinkedDrivers(e.target.value)} />
+                <p className="text-xs text-muted-foreground">
+                    Link registered drivers to this vehicle. You can add multiple drivers, separated by commas.
+                </p>
             </div>
           </FormSection>
           
@@ -217,3 +238,5 @@ export default function RegisterVehiclePage() {
     </Card>
   );
 }
+
+    
