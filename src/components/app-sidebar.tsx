@@ -28,7 +28,7 @@ const navItems: NavItem[] = [
   { href: "/investigations/search", label: "Image Search", icon: Search, roles: ["officer", "supervisor"], section: 'investigation' },
   
   { href: "/investigations/review", label: "Review Searches", icon: FileClock, roles: ["supervisor"], section: 'oversight' },
-  { href: "/audit-logs", label: "Audit Logs", icon: FileText, roles: ["supervisor"], section: 'oversight' },
+  { href: "/audit-logs", label: "Audit Logs", icon: FileText, roles: ["supervisor", "admin"], section: 'oversight' },
   { href: "/users/manage", label: "User Management", icon: Users, roles: ["admin"], section: 'oversight' },
 ];
 
@@ -128,22 +128,22 @@ export default function AppSidebar() {
             <div className="mt-4 flex flex-col gap-2">
                 {sections.general.length > 0 && (
                     <Section title="MENU" open={open}>
-                        {sections.general.map((link, idx) => <SidebarLink key={idx} link={link} />)}
+                        {sections.general.map((link, idx) => <SidebarLink key={idx} link={{...link, icon: <link.icon/>}} />)}
                     </Section>
                 )}
                 {sections.registration.length > 0 && (
                     <Section title="REGISTRATION" open={open}>
-                        {sections.registration.map((link, idx) => <SidebarLink key={idx} link={link} />)}
+                        {sections.registration.map((link, idx) => <SidebarLink key={idx} link={{...link, icon: <link.icon/>}} />)}
                     </Section>
                 )}
                 {sections.investigation.length > 0 && (
                     <Section title="INVESTIGATION" open={open}>
-                        {sections.investigation.map((link, idx) => <SidebarLink key={idx} link={link} />)}
+                        {sections.investigation.map((link, idx) => <SidebarLink key={idx} link={{...link, icon: <link.icon/>}} />)}
                     </Section>
                 )}
                  {sections.oversight.length > 0 && (
                     <Section title="OVERSIGHT" open={open}>
-                        {sections.oversight.map((link, idx) => <SidebarLink key={idx} link={link} />)}
+                        {sections.oversight.map((link, idx) => <SidebarLink key={idx} link={{...link, icon: <link.icon/>}} />)}
                     </Section>
                 )}
             </div>

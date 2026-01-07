@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
+import { X, Menu } from "lucide-react";
 
 interface Links {
   label: string;
@@ -87,20 +87,22 @@ export const DesktopSidebar = ({
 }: React.ComponentProps<typeof motion.div>) => {
   const { open, setOpen, animate } = useSidebar();
   return (
-    <motion.div
-      className={cn(
-        "h-full px-4 py-4 hidden md:flex md:flex-col w-[260px] shrink-0 bg-sidebar border-r border-sidebar-border",
-        className
-      )}
-      animate={{
-        width: animate ? (open ? "260px" : "75px") : "260px",
-      }}
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
-      {...props}
-    >
-      {children}
-    </motion.div>
+    <>
+      <motion.div
+        className={cn(
+          "h-full px-4 py-4 hidden md:flex md:flex-col w-[260px] shrink-0 bg-sidebar border-r border-sidebar-border",
+          className
+        )}
+        animate={{
+          width: animate ? (open ? "260px" : "75px") : "260px",
+        }}
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+        {...props}
+      >
+        {children}
+      </motion.div>
+    </>
   );
 };
 
@@ -112,6 +114,18 @@ export const MobileSidebar = ({
   const { open, setOpen } = useSidebar();
   return (
     <>
+      <div
+        className={cn(
+          "flex items-center justify-between p-4 md:hidden fixed top-0 left-0 w-full z-50",
+          className
+        )}
+        {...props}
+      >
+        <Menu
+          className="text-neutral-800 dark:text-neutral-200"
+          onClick={() => setOpen(!open)}
+        />
+      </div>
       <AnimatePresence>
         {open && (
           <motion.div
