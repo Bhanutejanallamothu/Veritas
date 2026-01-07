@@ -61,87 +61,89 @@ export default function ReviewSearchesPage() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead>Image</TableHead>
-                            <TableHead>Reason for Search</TableHead>
-                            <TableHead>Officer</TableHead>
-                            <TableHead>Date</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead className="text-right">Actions</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {investigations.map((inv) => (
-                            <TableRow key={inv.id}>
-                                <TableCell>
-                                    <Dialog>
-                                        <DialogTrigger asChild>
-                                            <Image
-                                                src={inv.uploadedImageURL}
-                                                alt={`Investigation ${inv.id}`}
-                                                width={80}
-                                                height={60}
-                                                className="rounded-md object-cover bg-muted cursor-pointer hover:opacity-80 transition-opacity"
-                                                data-ai-hint="cctv vehicle"
-                                            />
-                                        </DialogTrigger>
-                                        <DialogContent className="max-w-4xl">
-                                          <DialogHeader>
-                                            <DialogTitle>Investigation Image: {inv.id}</DialogTitle>
-                                          </DialogHeader>
-                                            <Image
-                                                src={inv.uploadedImageURL.replace('/150/100', '/800/600')} // Request larger image
-                                                alt={`Investigation ${inv.id}`}
-                                                width={800}
-                                                height={600}
-                                                className="rounded-md object-contain"
-                                            />
-                                        </DialogContent>
-                                    </Dialog>
-                                </TableCell>
-                                <TableCell className="max-w-xs truncate">{inv.reasonForSearch}</TableCell>
-                                <TableCell>{inv.uploadedBy}</TableCell>
-                                <TableCell>{inv.timestamp.toLocaleDateString()}</TableCell>
-                                <TableCell>
-                                    <Badge variant="outline" className={cn("border-transparent", getStatusBadgeClass(inv.status))}>
-                                        {inv.status}
-                                    </Badge>
-                                </TableCell>
-                                <TableCell className="text-right">
-                                    {inv.status !== 'Reviewed' ? (
-                                        <AlertDialog>
-                                            <AlertDialogTrigger asChild>
-                                                <Button variant="outline" size="sm">
-                                                    Mark as Reviewed
-                                                </Button>
-                                            </AlertDialogTrigger>
-                                            <AlertDialogContent>
-                                                <AlertDialogHeader>
-                                                    <AlertDialogTitle>Confirm Action</AlertDialogTitle>
-                                                    <AlertDialogDescription>
-                                                        This action will mark the investigation as reviewed and will be logged with your officer ID. Are you sure you want to proceed?
-                                                    </AlertDialogDescription>
-                                                </AlertDialogHeader>
-                                                <AlertDialogFooter>
-                                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                    <AlertDialogAction onClick={() => handleMarkAsReviewed(inv.id)}>
-                                                        Confirm
-                                                    </AlertDialogAction>
-                                                </AlertDialogFooter>
-                                            </AlertDialogContent>
-                                        </AlertDialog>
-                                    ) : (
-                                         <Button variant="outline" size="sm" disabled>
-                                            Reviewed
-                                        </Button>
-                                    )}
-                                </TableCell>
+                <div className="overflow-x-auto">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Image</TableHead>
+                                <TableHead>Reason for Search</TableHead>
+                                <TableHead>Officer</TableHead>
+                                <TableHead>Date</TableHead>
+                                <TableHead>Status</TableHead>
+                                <TableHead className="text-right">Actions</TableHead>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                        </TableHeader>
+                        <TableBody>
+                            {investigations.map((inv) => (
+                                <TableRow key={inv.id}>
+                                    <TableCell>
+                                        <Dialog>
+                                            <DialogTrigger asChild>
+                                                <Image
+                                                    src={inv.uploadedImageURL}
+                                                    alt={`Investigation ${inv.id}`}
+                                                    width={80}
+                                                    height={60}
+                                                    className="rounded-md object-cover bg-muted cursor-pointer hover:opacity-80 transition-opacity"
+                                                    data-ai-hint="cctv vehicle"
+                                                />
+                                            </DialogTrigger>
+                                            <DialogContent className="max-w-4xl">
+                                              <DialogHeader>
+                                                <DialogTitle>Investigation Image: {inv.id}</DialogTitle>
+                                              </DialogHeader>
+                                                <Image
+                                                    src={inv.uploadedImageURL.replace('/150/100', '/800/600')} // Request larger image
+                                                    alt={`Investigation ${inv.id}`}
+                                                    width={800}
+                                                    height={600}
+                                                    className="rounded-md object-contain"
+                                                />
+                                            </DialogContent>
+                                        </Dialog>
+                                    </TableCell>
+                                    <TableCell className="max-w-xs truncate">{inv.reasonForSearch}</TableCell>
+                                    <TableCell>{inv.uploadedBy}</TableCell>
+                                    <TableCell>{inv.timestamp.toLocaleDateString()}</TableCell>
+                                    <TableCell>
+                                        <Badge variant="outline" className={cn("border-transparent", getStatusBadgeClass(inv.status))}>
+                                            {inv.status}
+                                        </Badge>
+                                    </TableCell>
+                                    <TableCell className="text-right">
+                                        {inv.status !== 'Reviewed' ? (
+                                            <AlertDialog>
+                                                <AlertDialogTrigger asChild>
+                                                    <Button variant="outline" size="sm">
+                                                        Mark as Reviewed
+                                                    </Button>
+                                                </AlertDialogTrigger>
+                                                <AlertDialogContent>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>Confirm Action</AlertDialogTitle>
+                                                        <AlertDialogDescription>
+                                                            This action will mark the investigation as reviewed and will be logged with your officer ID. Are you sure you want to proceed?
+                                                        </AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <AlertDialogFooter>
+                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                        <AlertDialogAction onClick={() => handleMarkAsReviewed(inv.id)}>
+                                                            Confirm
+                                                        </AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
+                                        ) : (
+                                             <Button variant="outline" size="sm" disabled>
+                                                Reviewed
+                                            </Button>
+                                        )}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
             </CardContent>
         </Card>
     );
