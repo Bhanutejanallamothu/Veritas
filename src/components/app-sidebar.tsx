@@ -1,8 +1,9 @@
+
 "use client";
 
 import Link from "next/link";
 import { useAuth, UserRole } from "@/context/auth-context";
-import { SidebarBody, SidebarLink, useSidebar } from "@/components/ui/sidebar";
+import { Sidebar, SidebarLink, useSidebar } from "@/components/ui/sidebar";
 import { LayoutDashboard, Car, User, Search, FileText, Users, LogOut, FileClock } from "lucide-react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -120,7 +121,7 @@ export default function AppSidebar() {
   }
 
   return (
-    <SidebarBody className="justify-between gap-10">
+    <Sidebar className="justify-between gap-10">
         <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
             <div className="px-2 py-4">
                 {open ? <Logo /> : <LogoIcon />}
@@ -188,6 +189,6 @@ export default function AppSidebar() {
                 />
             </div>
         </div>
-    </SidebarBody>
+    </Sidebar>
   );
 }

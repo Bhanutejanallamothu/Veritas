@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { X, Menu } from "lucide-react";
+import { X } from "lucide-react";
 
 interface Links {
   label: string;
@@ -56,39 +56,13 @@ export const SidebarProvider = ({
 
 export const Sidebar = ({
   children,
-  open,
-  setOpen,
-  animate,
-}: {
-  children: React.ReactNode;
-  open?: boolean;
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
-  animate?: boolean;
-}) => {
-  return (
-    <SidebarProvider open={open} setOpen={setOpen} animate={animate}>
-      {children}
-    </SidebarProvider>
-  );
-};
-
-export const SidebarBody = (props: React.ComponentProps<typeof motion.div>) => {
-  return (
-    <>
-      <DesktopSidebar {...props} />
-      <MobileSidebar {...(props as React.ComponentProps<"div">)} />
-    </>
-  );
-};
-
-export const DesktopSidebar = ({
   className,
-  children,
   ...props
 }: React.ComponentProps<typeof motion.div>) => {
   const { open, setOpen, animate } = useSidebar();
   return (
     <>
+      {/* Desktop Sidebar */}
       <motion.div
         className={cn(
           "h-full px-4 py-4 hidden md:flex md:flex-col w-[260px] shrink-0 bg-sidebar border-r border-sidebar-border",
@@ -103,18 +77,8 @@ export const DesktopSidebar = ({
       >
         {children}
       </motion.div>
-    </>
-  );
-};
 
-export const MobileSidebar = ({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<"div">) => {
-  const { open, setOpen } = useSidebar();
-  return (
-    <>
+      {/* Mobile Sidebar */}
       <AnimatePresence>
         {open && (
           <motion.div
