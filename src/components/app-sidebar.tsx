@@ -59,8 +59,8 @@ const LogoIcon = () => {
       <Image 
         src="https://ik.imagekit.io/bhanuteja110/ChatGPT%20Image%20Jan%206,%202026,%2011_09_33%20PM.png" 
         alt="Veritas Platform Logo"
-        width={70}
-        height={70}
+        width={80}
+        height={80}
         className="h-auto rounded-full"
       />
     </Link>
