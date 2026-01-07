@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -155,7 +156,7 @@ export default function ImageSearchPage() {
           </CardContent>
           <CardFooter>
             <Button type="submit" disabled={loading || !file || !reason} className="w-full">
-              {loading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Search className="mr-2 h-4 w-4" />}
+              {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Search className="mr-2 h-4 w-4" />}
               {loading ? "Searching..." : "Initiate Search"}
             </Button>
           </CardFooter>
