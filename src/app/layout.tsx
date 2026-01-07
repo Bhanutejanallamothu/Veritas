@@ -1,14 +1,17 @@
-"use client";
-
+import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/context/auth-context';
 import { Toaster } from '@/components/ui/toaster';
-import { ThemeProvider, useTheme } from 'next-themes';
-import { GradientDots } from '@/components/ui/gradient-dots';
-import { useEffect, useState } from 'react';
+import { ThemeProvider } from '@/components/theme-provider';
+import { AppBackground } from '@/components/app-background';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+
+export const metadata: Metadata = {
+  title: 'Veritas Platform',
+  description: 'Unified Vehicle and Driver Registration and Investigation Assistance Platform',
+};
 
 export default function RootLayout({
   children,
@@ -17,10 +20,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <title>Veritas Platform</title>
-        <meta name="description" content="Unified Vehicle and Driver Registration and Investigation Assistance Platform" />
-      </head>
       <body className={`${inter.variable} font-body antialiased`}>
         <ThemeProvider
           attribute="class"
@@ -28,30 +27,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AppLayout>{children}</AppLayout>
+          <AppBackground />
+          <AuthProvider>
+            {children}
+            <Toaster />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
-  );
-}
-
-function AppLayout({ children }: { children: React.ReactNode }) {
-  const { theme } = useTheme();
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    setIsDark(theme === 'dark');
-  }, [theme]);
-
-  return (
-    <div className="relative">
-      {isDark && (
-         <GradientDots className="absolute inset-0 -z-10" />
-      )}
-      <AuthProvider>
-        {children}
-        <Toaster />
-      </AuthProvider>
-    </div>
   );
 }
