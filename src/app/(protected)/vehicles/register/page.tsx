@@ -95,7 +95,7 @@ export default function RegisterVehiclePage() {
   }
 
   return (
-    <Card>
+    <Card className="bg-card/50">
       <CardHeader>
         <CardTitle>Register New Vehicle</CardTitle>
         <CardDescription>
