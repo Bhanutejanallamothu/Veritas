@@ -27,7 +27,7 @@ export default function AppHeader() {
   const { setOpen, open } = useSidebar();
 
   return (
-    <header className="flex h-16 items-center justify-between border-b bg-card px-4 md:px-6">
+    <header className="flex h-16 items-center justify-between border-b bg-transparent px-4 md:px-6">
         <div className="flex items-center gap-4">
              <Menu
                 className="text-neutral-800 dark:text-neutral-200 cursor-pointer md:hidden"
