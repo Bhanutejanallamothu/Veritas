@@ -13,6 +13,7 @@ import { Upload, FileQuestion, Loader2, AlertTriangle, CheckCircle, Search, Hour
 import { imageBasedVehicleSearch, type ImageBasedVehicleSearchOutput } from "@/ai/flows/image-based-vehicle-search";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
+import { useToast } from "@/hooks/use-toast";
 
 type SearchStatus = "idle" | "uploading" | "processing" | "complete" | "error";
 
@@ -33,6 +34,7 @@ export default function ImageSearchPage() {
   const [error, setError] = useState<string | null>(null);
   const [searchStatus, setSearchStatus] = useState<SearchStatus>("idle");
   const [progress, setProgress] = useState(0);
+  const { toast } = useToast();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -82,6 +84,10 @@ export default function ImageSearchPage() {
         setProgress(100);
         setSearchStatus("complete");
         setResults(response);
+        toast({
+          title: "Search Complete",
+          description: "Potential matches have been found and are displayed below.",
+        });
     } catch (err) {
       setError("An unexpected error occurred during the search.");
       setSearchStatus("error");

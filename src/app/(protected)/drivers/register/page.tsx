@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Upload, X } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/hooks/use-toast";
 
 const FormSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
     <div className="space-y-4">
@@ -26,6 +27,7 @@ const RequiredIndicator = () => <span className="text-destructive ml-1">*</span>
 export default function RegisterDriverPage() {
   const [file, setFile] = useState<File | null>(null);
   const [filePreview, setFilePreview] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -43,6 +45,16 @@ export default function RegisterDriverPage() {
     setFile(null);
     setFilePreview(null);
   };
+  
+  const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      // In a real app, you'd handle form submission to the backend here.
+      toast({
+        title: "Driver Registered",
+        description: "The new driver's details have been successfully saved to the system.",
+      });
+      // Optionally reset form state here
+  }
 
   return (
     <Card>
@@ -53,23 +65,23 @@ export default function RegisterDriverPage() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form className="space-y-8">
+        <form className="space-y-8" onSubmit={handleSubmit}>
             <FormSection title="Personal Information">
                 <div className="space-y-2">
                     <Label htmlFor="fullName">Full Name <RequiredIndicator /></Label>
-                    <Input id="fullName" placeholder="e.g., Johnathan Doe" />
+                    <Input id="fullName" placeholder="e.g., Johnathan Doe" required/>
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="licenseNumber">License Number <RequiredIndicator /></Label>
-                    <Input id="licenseNumber" placeholder="e.g., D12345678" />
+                    <Input id="licenseNumber" placeholder="e.g., D12345678" required/>
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="phone">Phone Number <RequiredIndicator /></Label>
-                    <Input id="phone" type="tel" placeholder="e.g., (555) 123-4567" />
+                    <Input id="phone" type="tel" placeholder="e.g., (555) 123-4567" required/>
                 </div>
                 <div className="space-y-2 md:col-span-2">
                     <Label htmlFor="address">Address <RequiredIndicator /></Label>
-                    <Textarea id="address" placeholder="e.g., 123 Main St, Anytown, USA 12345" />
+                    <Textarea id="address" placeholder="e.g., 123 Main St, Anytown, USA 12345" required/>
                 </div>
             </FormSection>
 
@@ -92,7 +104,7 @@ export default function RegisterDriverPage() {
                                     <p className="text-xs text-muted-foreground">PNG or JPG (MAX. 2MB)</p>
                                 </div>
                             )}
-                            <Input id="dropzone-file" type="file" className="hidden" onChange={handleFileChange} />
+                            <Input id="dropzone-file" type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
                         </label>
                     </div> 
                 </div>
@@ -107,7 +119,7 @@ export default function RegisterDriverPage() {
             </FormSection>
           
             <div className="flex justify-end pt-4">
-                <Button>Register Driver</Button>
+                <Button type="submit">Register Driver</Button>
             </div>
         </form>
       </CardContent>

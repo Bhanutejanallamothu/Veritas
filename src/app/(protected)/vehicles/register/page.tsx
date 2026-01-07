@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { vehicleStatuses, vehicleTypes } from "@/lib/placeholder-data";
 import { Upload, X } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/hooks/use-toast";
 
 const FormSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
     <div className="space-y-4">
@@ -28,6 +29,7 @@ const RequiredIndicator = () => <span className="text-destructive ml-1">*</span>
 export default function RegisterVehiclePage() {
   const [files, setFiles] = useState<File[]>([]);
   const [filePreviews, setFilePreviews] = useState<string[]>([]);
+  const { toast } = useToast();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(e.target.files || []);
@@ -49,6 +51,16 @@ export default function RegisterVehiclePage() {
   const removeFile = (index: number) => {
     setFiles(files.filter((_, i) => i !== index));
     setFilePreviews(filePreviews.filter((_, i) => i !== index));
+  };
+  
+  const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      // In a real app, you'd handle form submission to the backend here.
+      toast({
+        title: "Vehicle Registered",
+        description: "The new vehicle has been successfully saved to the system.",
+      });
+      // Optionally reset form state here
   }
 
   return (
@@ -60,22 +72,22 @@ export default function RegisterVehiclePage() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form className="space-y-8">
+        <form className="space-y-8" onSubmit={handleSubmit}>
           <FormSection title="Vehicle Identity">
             <div className="space-y-2">
               <Label htmlFor="registrationNumber">Registration Number <RequiredIndicator /></Label>
-              <Input id="registrationNumber" placeholder="e.g., ABC-123" />
+              <Input id="registrationNumber" placeholder="e.g., ABC-123" required/>
             </div>
             <div className="space-y-2">
               <Label htmlFor="model">Make and Model <RequiredIndicator /></Label>
-              <Input id="model" placeholder="e.g., Toyota Camry 2022" />
+              <Input id="model" placeholder="e.g., Toyota Camry 2022" required/>
             </div>
           </FormSection>
 
           <FormSection title="Physical Characteristics">
             <div className="space-y-2">
               <Label htmlFor="vehicleType">Vehicle Type <RequiredIndicator /></Label>
-              <Select>
+              <Select required>
                 <SelectTrigger id="vehicleType">
                   <SelectValue placeholder="Select vehicle type" />
                 </SelectTrigger>
@@ -88,7 +100,7 @@ export default function RegisterVehiclePage() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="color">Color <RequiredIndicator /></Label>
-              <Input id="color" placeholder="e.g., Metallic Blue" />
+              <Input id="color" placeholder="e.g., Metallic Blue" required/>
             </div>
              <div className="space-y-2 md:col-span-2">
               <Label htmlFor="identifyingMarks">Identifying Marks</Label>
@@ -99,7 +111,7 @@ export default function RegisterVehiclePage() {
           <FormSection title="Operational Information">
             <div className="space-y-2">
               <Label htmlFor="status">Status <RequiredIndicator /></Label>
-              <Select>
+              <Select required>
                 <SelectTrigger id="status">
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
@@ -126,7 +138,7 @@ export default function RegisterVehiclePage() {
                           <p className="mb-2 text-sm text-muted-foreground"><span className="font-semibold">Click to upload</span> or drag and drop</p>
                           <p className="text-xs text-muted-foreground">PNG, JPG, or GIF (MAX. 5MB each)</p>
                       </div>
-                      <Input id="dropzone-file" type="file" className="hidden" multiple onChange={handleFileChange} />
+                      <Input id="dropzone-file" type="file" className="hidden" multiple onChange={handleFileChange} accept="image/*"/>
                   </label>
               </div>
               {filePreviews.length > 0 && (
@@ -153,7 +165,7 @@ export default function RegisterVehiclePage() {
           </FormSection>
           
           <div className="flex justify-end pt-4">
-            <Button>Register Vehicle</Button>
+            <Button type="submit">Register Vehicle</Button>
           </div>
         </form>
       </CardContent>

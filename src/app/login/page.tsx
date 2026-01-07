@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -21,16 +22,22 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Shield } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function LoginPage() {
   const { login, loading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState<UserRole>("officer");
+  const { toast } = useToast();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     login(email, role);
+    toast({
+      title: "Login Successful",
+      description: `Welcome! You have logged in with the ${role} role.`,
+    })
   };
 
   return (

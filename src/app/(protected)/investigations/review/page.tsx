@@ -34,12 +34,18 @@ import { mockInvestigations } from "@/lib/placeholder-data";
 import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ReviewSearchesPage() {
     const [investigations, setInvestigations] = useState(mockInvestigations);
+    const { toast } = useToast();
 
     const handleMarkAsReviewed = (id: string) => {
         setInvestigations(prev => prev.map(inv => inv.id === id ? {...inv, status: 'Reviewed'} : inv));
+        toast({
+            title: "Investigation Reviewed",
+            description: `Investigation ${id} has been marked as reviewed and logged.`,
+        });
     };
 
     const getStatusBadgeClass = (status: 'Pending Review' | 'Reviewed') => {
