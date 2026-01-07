@@ -35,8 +35,8 @@ const Logo = () => {
       <Image 
         src="https://ik.imagekit.io/bhanuteja110/ChatGPT%20Image%20Jan%206,%202026,%2011_09_33%20PM.png" 
         alt="Veritas Platform Logo"
-        width={40}
-        height={40}
+        width={50}
+        height={50}
         className="h-auto rounded-full"
       />
       <motion.span
@@ -59,8 +59,8 @@ const LogoIcon = () => {
       <Image 
         src="https://ik.imagekit.io/bhanuteja110/ChatGPT%20Image%20Jan%206,%202026,%2011_09_33%20PM.png" 
         alt="Veritas Platform Logo"
-        width={40}
-        height={40}
+        width={50}
+        height={50}
         className="h-auto rounded-full"
       />
     </Link>
