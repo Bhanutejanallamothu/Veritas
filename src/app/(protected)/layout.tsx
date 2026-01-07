@@ -46,7 +46,7 @@ function ProtectedLayoutContent({ children }: { children: React.ReactNode }) {
   return (
     <div
       className={cn(
-        "rounded-md flex flex-col md:flex-row w-full flex-1 h-screen mx-auto border-neutral-200 dark:border-neutral-700 overflow-hidden"
+        "rounded-lg flex flex-col md:flex-row w-full flex-1 h-screen mx-auto border-neutral-200 dark:border-neutral-700 overflow-hidden"
       )}
     >
       <Sidebar>
