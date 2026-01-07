@@ -1,7 +1,7 @@
 "use client";
 
+import React from 'react';
 import { usePathname } from "next/navigation";
-import { LogOut } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 import { useSidebar } from "./ui/sidebar";
 import { Menu } from "lucide-react";
@@ -23,11 +23,11 @@ function getTitleFromPath(path: string): string {
 
 export default function AppHeader() {
   const pathname = usePathname();
-  const title = getTitleFromPath(pathname);
+  const title = React.useMemo(() => getTitleFromPath(pathname), [pathname]);
   const { setOpen, open } = useSidebar();
 
   return (
-    <header className="flex h-16 items-center justify-between border-b bg-transparent px-4 md:px-6">
+    <header className="flex h-16 shrink-0 items-center justify-between border-b bg-transparent px-4 md:px-6">
         <div className="flex items-center gap-4">
              <Menu
                 className="text-neutral-800 dark:text-neutral-200 cursor-pointer md:hidden"

@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/context/auth-context';
 import { Toaster } from '@/components/ui/toaster';
-import { ThemeProvider } from '@/components/theme-provider';
+import { ClientProviders } from '@/components/client-providers';
 import { AppBackground } from '@/components/app-background';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
@@ -21,18 +21,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} font-body antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ClientProviders>
           <AppBackground />
           <AuthProvider>
             {children}
             <Toaster />
           </AuthProvider>
-        </ThemeProvider>
+        </ClientProviders>
       </body>
     </html>
   );
