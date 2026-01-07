@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Car, User, Search, History, FileClock, FileText } from 'lucide-react';
@@ -54,7 +55,7 @@ export default function SupervisorDashboard() {
       {supervisorActions.map((action) => (
          <Link href={action.href} key={action.title} className={cn(action.isPrimary ? "lg:col-span-2" : "")}>
             <Card className={cn(
-                "hover:bg-muted/50 transition-colors h-full",
+                "bg-card/50 hover:bg-muted/50 transition-colors h-full",
                 action.isPrimary && "border-primary/50 ring-2 ring-primary/20"
             )}>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
