@@ -13,6 +13,7 @@ import { vehicleStatuses, vehicleTypes } from "@/lib/placeholder-data";
 import { Upload, X } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 const FormSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
     <div className="space-y-4">
@@ -29,6 +30,7 @@ const RequiredIndicator = () => <span className="text-destructive ml-1">*</span>
 export default function RegisterVehiclePage() {
   const [files, setFiles] = useState<File[]>([]);
   const [filePreviews, setFilePreviews] = useState<string[]>([]);
+  const [isDragging, setIsDragging] = useState(false);
   const { toast } = useToast();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,6 +55,35 @@ export default function RegisterVehiclePage() {
     setFilePreviews(filePreviews.filter((_, i) => i !== index));
   };
   
+  const handleDragEnter = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const selectedFiles = Array.from(e.dataTransfer.files || []);
+    setFiles(prev => [...prev, ...selectedFiles]);
+
+    const newPreviews: string[] = [];
+    selectedFiles.forEach(file => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        newPreviews.push(reader.result as string);
+        if (newPreviews.length === selectedFiles.length) {
+          setFilePreviews(prev => [...prev, ...newPreviews]);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
       // In a real app, you'd handle form submission to the backend here.
@@ -132,7 +163,17 @@ export default function RegisterVehiclePage() {
             <div className="space-y-2 md:col-span-2">
               <Label>Vehicle Images</Label>
                <div className="flex items-center justify-center w-full">
-                  <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer bg-muted/50 hover:bg-muted">
+                  <label 
+                    htmlFor="dropzone-file" 
+                    className={cn(
+                        "flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer bg-muted/50 hover:bg-muted transition-colors",
+                        isDragging && "border-primary bg-primary/10"
+                    )}
+                    onDragEnter={handleDragEnter}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    onDragOver={(e) => e.preventDefault()} // Necessary to allow drop
+                    >
                       <div className="flex flex-col items-center justify-center pt-5 pb-6">
                           <Upload className="w-8 h-8 mb-4 text-muted-foreground" />
                           <p className="mb-2 text-sm text-muted-foreground"><span className="font-semibold">Click to upload</span> or drag and drop</p>
@@ -146,7 +187,7 @@ export default function RegisterVehiclePage() {
                   {filePreviews.map((preview, index) => (
                     <div key={index} className="relative group">
                       <Image src={preview} alt={`Vehicle image ${index + 1}`} width={200} height={150} className="rounded-md object-cover w-full h-full" />
-                      <Button variant="destructive" size="icon" className="absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => removeFile(index)}>
+                      <Button variant="destructive" size="icon" className="absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity z-10" onClick={() => removeFile(index)}>
                         <X className="h-4 w-4" />
                       </Button>
                     </div>
@@ -159,7 +200,6 @@ export default function RegisterVehiclePage() {
           <FormSection title="Associations">
              <div className="space-y-2 md:col-span-2">
                 <Label htmlFor="linkedDrivers">Link Drivers</Label>
-                <Input id="linkedDrivers" placeholder="Search by driver name or license number" />
                 {/* In a real app this would be an async search select component */}
             </div>
           </FormSection>

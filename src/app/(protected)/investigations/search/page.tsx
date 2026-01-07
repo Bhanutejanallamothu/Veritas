@@ -205,7 +205,7 @@ export default function ImageSearchPage() {
                     <Card key={index}>
                         <CardContent className="p-4 flex items-center space-x-4">
                             <Image 
-                                src={`https://picsum.photos/seed/${suggestion.registrationNumber}/200/150`} 
+                                src={suggestion.vehicleImageURL}
                                 alt={`Vehicle ${suggestion.registrationNumber}`} 
                                 width={128} height={96}
                                 data-ai-hint="vehicle side"

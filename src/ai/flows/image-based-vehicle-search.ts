@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -17,7 +18,7 @@ const ImageBasedVehicleSearchInputSchema = z.object({
   uploadedImageURL: z
     .string()
     .describe(
-      'The URL of the uploaded image, as a data URI that must include a MIME type and use Base64 encoding. Expected format: \'data:<mimetype>;base64,<encoded_data>\'.' // Corrected description
+      "The URL of the uploaded image, as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'." // Corrected description
     ),
   reasonForSearch: z.string().describe('The reason for the image-based search.'),
 });
@@ -28,7 +29,7 @@ const ImageBasedVehicleSearchOutputSchema = z.object({
     z.object({
       registrationNumber: z.string().describe('The registration number of the vehicle.'),
       confidenceScore: z.number().describe('The confidence score of the match (0-1).'),
-      vehicleImageURL: z.string().optional().describe('URL of the vehicle image for display'),
+      vehicleImageURL: z.string().describe('URL of the vehicle image for display'),
     })
   ).describe('Array of suggested vehicle matches with confidence scores.'),
   disclaimer: z.string().describe('Disclaimer emphasizing AI assistance only.'),
@@ -71,16 +72,17 @@ const imageBasedVehicleSearchFlow = ai.defineFlow(
         {
           registrationNumber: 'ABC-123',
           confidenceScore: 0.85,
-          vehicleImageURL: 'https://example.com/image1.jpg',
+          vehicleImageURL: 'https://images.unsplash.com/photo-1645596105558-a6434c16fbc3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxzaWx2ZXIlMjBzZWRhbnxlbnwwfHx8fDE3Njc2MTIzMjJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
         },
         {
           registrationNumber: 'XYZ-789',
           confidenceScore: 0.72,
-          vehicleImageURL: 'https://example.com/image2.jpg',
+          vehicleImageURL: 'https://images.unsplash.com/photo-1687088351621-c70a25d92e44?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxibHVlJTIwdHJ1Y2t8ZW58MHx8fHwxNzY3NzE2NzU4fDA&ixlib=rb-4.1.0&q=80&w=1080',
         },
         {
           registrationNumber: 'DEF-456',
           confidenceScore: 0.60,
+          vehicleImageURL: 'https://images.unsplash.com/photo-1641825932091-73f78062d625?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxyZWQlMjBoYXRjaGJhY2t8ZW58MHx8fHwxNzY3NjI0NzY0fDA&ixlib=rb-4.1.0&q=80&w=1080',
         },
       ],
       disclaimer: 'AI suggestions only. Final judgment lies with the officer.',
