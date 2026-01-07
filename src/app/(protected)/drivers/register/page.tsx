@@ -26,6 +26,11 @@ const FormSection = ({ title, children }: { title: string; children: React.React
 const RequiredIndicator = () => <span className="text-destructive ml-1">*</span>
 
 export default function RegisterDriverPage() {
+  const [fullName, setFullName] = useState("");
+  const [licenseNumber, setLicenseNumber] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [linkedVehicles, setLinkedVehicles] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [filePreview, setFilePreview] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -79,7 +84,14 @@ export default function RegisterDriverPage() {
         title: "Driver Registered",
         description: "The new driver's details have been successfully saved to the system.",
       });
-      // Optionally reset form state here
+      // Reset form state
+      setFullName("");
+      setLicenseNumber("");
+      setPhone("");
+      setAddress("");
+      setLinkedVehicles("");
+      setFile(null);
+      setFilePreview(null);
   }
 
   return (
@@ -95,19 +107,19 @@ export default function RegisterDriverPage() {
             <FormSection title="Personal Information">
                 <div className="space-y-2">
                     <Label htmlFor="fullName">Full Name <RequiredIndicator /></Label>
-                    <Input id="fullName" placeholder="e.g., Johnathan Doe" required/>
+                    <Input id="fullName" placeholder="e.g., Johnathan Doe" required value={fullName} onChange={(e) => setFullName(e.target.value)} />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="licenseNumber">License Number <RequiredIndicator /></Label>
-                    <Input id="licenseNumber" placeholder="e.g., D12345678" required/>
+                    <Input id="licenseNumber" placeholder="e.g., D12345678" required value={licenseNumber} onChange={(e) => setLicenseNumber(e.target.value)} />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="phone">Phone Number <RequiredIndicator /></Label>
-                    <Input id="phone" type="tel" placeholder="e.g., (555) 123-4567" required/>
+                    <Input id="phone" type="tel" placeholder="e.g., (555) 123-4567" required value={phone} onChange={(e) => setPhone(e.target.value)} />
                 </div>
                 <div className="space-y-2 md:col-span-2">
                     <Label htmlFor="address">Address <RequiredIndicator /></Label>
-                    <Textarea id="address" placeholder="e.g., 123 Main St, Anytown, USA 12345" required/>
+                    <Textarea id="address" placeholder="e.g., 123 Main St, Anytown, USA 12345" required value={address} onChange={(e) => setAddress(e.target.value)} />
                 </div>
             </FormSection>
 
@@ -147,9 +159,12 @@ export default function RegisterDriverPage() {
             </FormSection>
 
             <FormSection title="Associations">
-                <div className="space-y-2 md:col-span-2">
+                 <div className="space-y-2 md:col-span-2">
                     <Label htmlFor="linkedVehicles">Link Vehicles</Label>
-                    {/* In a real app this would be an async search select component */}
+                    <Input id="linkedVehicles" placeholder="e.g., ABC-123, XYZ-789" value={linkedVehicles} onChange={(e) => setLinkedVehicles(e.target.value)} />
+                    <p className="text-xs text-muted-foreground">
+                        Link registered vehicles to this driver. You can add multiple registration numbers, separated by commas.
+                    </p>
                 </div>
             </FormSection>
           
