@@ -1,5 +1,8 @@
+
 "use client";
 
+import { useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -7,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { vehicleStatuses, vehicleTypes } from "@/lib/placeholder-data";
-import { Upload } from "lucide-react";
+import { Upload, X } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const FormSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
@@ -23,6 +26,31 @@ const FormSection = ({ title, children }: { title: string; children: React.React
 const RequiredIndicator = () => <span className="text-destructive ml-1">*</span>
 
 export default function RegisterVehiclePage() {
+  const [files, setFiles] = useState<File[]>([]);
+  const [filePreviews, setFilePreviews] = useState<string[]>([]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from(e.target.files || []);
+    setFiles(prev => [...prev, ...selectedFiles]);
+
+    const newPreviews: string[] = [];
+    selectedFiles.forEach(file => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        newPreviews.push(reader.result as string);
+        if (newPreviews.length === selectedFiles.length) {
+          setFilePreviews(prev => [...prev, ...newPreviews]);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const removeFile = (index: number) => {
+    setFiles(files.filter((_, i) => i !== index));
+    setFilePreviews(filePreviews.filter((_, i) => i !== index));
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -98,9 +126,21 @@ export default function RegisterVehiclePage() {
                           <p className="mb-2 text-sm text-muted-foreground"><span className="font-semibold">Click to upload</span> or drag and drop</p>
                           <p className="text-xs text-muted-foreground">PNG, JPG, or GIF (MAX. 5MB each)</p>
                       </div>
-                      <Input id="dropzone-file" type="file" className="hidden" multiple />
+                      <Input id="dropzone-file" type="file" className="hidden" multiple onChange={handleFileChange} />
                   </label>
-              </div> 
+              </div>
+              {filePreviews.length > 0 && (
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+                  {filePreviews.map((preview, index) => (
+                    <div key={index} className="relative group">
+                      <Image src={preview} alt={`Vehicle image ${index + 1}`} width={200} height={150} className="rounded-md object-cover w-full h-full" />
+                      <Button variant="destructive" size="icon" className="absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => removeFile(index)}>
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </FormSection>
 
