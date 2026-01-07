@@ -14,6 +14,8 @@ import { imageBasedVehicleSearch, type ImageBasedVehicleSearchOutput } from "@/a
 import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 type SearchStatus = "idle" | "uploading" | "processing" | "complete" | "error";
 
@@ -35,6 +37,7 @@ export default function ImageSearchPage() {
   const [searchStatus, setSearchStatus] = useState<SearchStatus>("idle");
   const [progress, setProgress] = useState(0);
   const { toast } = useToast();
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -44,6 +47,30 @@ export default function ImageSearchPage() {
       reader.onloadend = () => {
         setFilePreview(reader.result as string);
         setSearchStatus("idle");
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  };
+
+  const handleDragEnter = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const selectedFile = e.dataTransfer.files?.[0];
+     if (selectedFile) {
+      setFile(selectedFile);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFilePreview(reader.result as string);
       };
       reader.readAsDataURL(selectedFile);
     }
@@ -92,6 +119,11 @@ export default function ImageSearchPage() {
       setError("An unexpected error occurred during the search.");
       setSearchStatus("error");
       console.error(err);
+      toast({
+        variant: "destructive",
+        title: "Search Failed",
+        description: "Could not complete the vehicle search. Please try again.",
+      })
     } finally {
       setLoading(false);
     }
@@ -112,7 +144,7 @@ export default function ImageSearchPage() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <Card>
+      <Card className="bg-card/50">
         <CardHeader>
           <CardTitle>New Image-Based Search</CardTitle>
           <CardDescription>
@@ -124,7 +156,17 @@ export default function ImageSearchPage() {
             <div className="space-y-2">
               <Label className="font-semibold">Evidence Upload (AI Analysis)</Label>
               <div className="flex items-center justify-center w-full">
-                  <label htmlFor="dropzone-file" className="relative flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-muted/50 hover:bg-muted hover:border-primary/50 transition-all glow-on-hover">
+                  <label 
+                      htmlFor="dropzone-file" 
+                      className={cn(
+                          "relative flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-muted/50 hover:bg-muted transition-colors",
+                          isDragging && "border-primary bg-primary/10"
+                      )}
+                      onDragEnter={handleDragEnter}
+                      onDragLeave={handleDragLeave}
+                      onDrop={handleDrop}
+                      onDragOver={(e) => e.preventDefault()}
+                  >
                       {filePreview ? (
                           <Image src={filePreview} alt="Uploaded image preview" fill objectFit="contain" className="rounded-lg p-2"/>
                       ) : (
@@ -164,7 +206,7 @@ export default function ImageSearchPage() {
         <h2 className="text-xl font-semibold font-headline">Search Results</h2>
         {loading && (
           <div className="space-y-4">
-            <Card>
+            <Card className="bg-card/50">
                 <CardContent className="p-4 flex items-center space-x-4">
                      <Skeleton className="h-24 w-32 rounded-md" />
                      <div className="space-y-2 flex-1">
@@ -173,7 +215,7 @@ export default function ImageSearchPage() {
                      </div>
                 </CardContent>
             </Card>
-             <Card>
+             <Card className="bg-card/50">
                 <CardContent className="p-4 flex items-center space-x-4">
                      <Skeleton className="h-24 w-32 rounded-md" />
                      <div className="space-y-2 flex-1">
@@ -186,7 +228,7 @@ export default function ImageSearchPage() {
         )}
 
         {!loading && !results && (
-            <Card className="flex flex-col items-center justify-center h-full min-h-[300px] text-center p-6 border-dashed">
+            <Card className="flex flex-col items-center justify-center h-full min-h-[300px] text-center p-6 border-dashed bg-card/50">
                 <FileQuestion className="h-12 w-12 text-muted-foreground" />
                 <h3 className="mt-4 text-lg font-semibold">Results will appear here</h3>
                 <p className="mt-1 text-sm text-muted-foreground">Complete the form to start a search.</p>
@@ -202,13 +244,13 @@ export default function ImageSearchPage() {
                     <AlertDescription className="text-primary/90">{results.disclaimer}</AlertDescription>
                 </Alert>
                 {results.vehicleSuggestions.map((suggestion, index) => (
-                    <Card key={index}>
+                    <Card key={index} className="bg-card/50">
                         <CardContent className="p-4 flex items-center space-x-4">
                             <Image 
-                                src={suggestion.vehicleImageURL}
+                                src={PlaceHolderImages.find(img => img.id === `vehicle-${index+1}`)?.imageUrl || suggestion.vehicleImageURL}
                                 alt={`Vehicle ${suggestion.registrationNumber}`} 
                                 width={128} height={96}
-                                data-ai-hint="vehicle side"
+                                data-ai-hint={PlaceHolderImages.find(img => img.id === `vehicle-${index+1}`)?.imageHint || "vehicle side"}
                                 className="rounded-md object-cover bg-muted"
                             />
                             <div className="flex-1">
