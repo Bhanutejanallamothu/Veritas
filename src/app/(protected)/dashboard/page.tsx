@@ -7,6 +7,7 @@ import AdminDashboard from '@/components/dashboard/admin-dashboard';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Briefcase, BrainCircuit, Database, CheckCircle, Clock } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 const SystemStatusBar = () => (
     <Card className="mb-6 bg-card/50">
