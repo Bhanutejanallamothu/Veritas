@@ -88,13 +88,13 @@ export default function ImageSearchPage() {
                               <p className="text-xs text-muted-foreground">Image from CCTV, mobile, etc.</p>
                           </div>
                       )}
-                      <Input id="dropzone-file" type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+                      <Input id="dropzone-file" type="file" accept="image/*" className="hidden" onChange={handleFileChange} disabled={loading} />
                   </label>
               </div> 
             </div>
             <div className="space-y-2">
               <Label htmlFor="reasonForSearch">Reason for Search (Mandatory)</Label>
-              <Textarea id="reasonForSearch" value={reason} onChange={(e) => setReason(e.target.value)} placeholder="e.g., Vehicle involved in a reported incident at 5th and Main St." required />
+              <Textarea id="reasonForSearch" value={reason} onChange={(e) => setReason(e.target.value)} placeholder="e.g., Vehicle involved in a reported incident at 5th and Main St." required disabled={loading} />
             </div>
              {error && (
                 <Alert variant="destructive">
