@@ -1,11 +1,14 @@
+
 "use client";
 
+import { useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Upload } from "lucide-react";
+import { Upload, X } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 const FormSection = ({ title, children }: { title: string; children: React.ReactNode }) => (
@@ -21,6 +24,26 @@ const FormSection = ({ title, children }: { title: string; children: React.React
 const RequiredIndicator = () => <span className="text-destructive ml-1">*</span>
 
 export default function RegisterDriverPage() {
+  const [file, setFile] = useState<File | null>(null);
+  const [filePreview, setFilePreview] = useState<string | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFilePreview(reader.result as string);
+      };
+      reader.readAsDataURL(selectedFile);
+    }
+  };
+
+  const removeFile = () => {
+    setFile(null);
+    setFilePreview(null);
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -54,13 +77,22 @@ export default function RegisterDriverPage() {
                  <div className="space-y-2 md:col-span-2">
                     <Label>Driver Photo <RequiredIndicator /></Label>
                     <div className="flex items-center justify-center w-full">
-                        <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer bg-muted/50 hover:bg-muted">
-                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                                <Upload className="w-8 h-8 mb-4 text-muted-foreground" />
-                                <p className="mb-2 text-sm text-muted-foreground"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-                                <p className="text-xs text-muted-foreground">PNG or JPG (MAX. 2MB)</p>
-                            </div>
-                            <Input id="dropzone-file" type="file" className="hidden" />
+                        <label htmlFor="dropzone-file" className="relative flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer bg-muted/50 hover:bg-muted">
+                           {filePreview ? (
+                                <>
+                                    <Image src={filePreview} alt="Driver photo preview" layout="fill" objectFit="contain" className="rounded-lg p-2" />
+                                    <Button variant="destructive" size="icon" className="absolute top-2 right-2 h-7 w-7" onClick={(e) => { e.preventDefault(); removeFile(); }}>
+                                        <X className="h-4 w-4" />
+                                    </Button>
+                                </>
+                            ) : (
+                                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <Upload className="w-8 h-8 mb-4 text-muted-foreground" />
+                                    <p className="mb-2 text-sm text-muted-foreground"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                                    <p className="text-xs text-muted-foreground">PNG or JPG (MAX. 2MB)</p>
+                                </div>
+                            )}
+                            <Input id="dropzone-file" type="file" className="hidden" onChange={handleFileChange} />
                         </label>
                     </div> 
                 </div>
