@@ -58,22 +58,18 @@ export default function ProtectedLayout({
     return (
       <AuthGuard>
         <SidebarProvider open={open} setOpen={setOpen}>
-            <div
-              className={cn(
-                "rounded-lg flex flex-col md:flex-row w-full flex-1 h-screen mx-auto overflow-hidden"
-              )}
-            >
-              <Sidebar>
-                <AppSidebar />
-              </Sidebar>
-              <div className="flex flex-col flex-1">
-                  <AppHeader />
-                  <main className="flex-1 overflow-y-auto bg-transparent">
-                    <div className="p-4 sm:p-6 lg:p-8">
-                        {children}
-                    </div>
-                  </main>
-              </div>
+            <div className="flex h-screen w-full">
+                <Sidebar>
+                    <AppSidebar />
+                </Sidebar>
+                <div className="flex flex-1 flex-col">
+                    <AppHeader />
+                    <main className="flex-1 overflow-y-auto">
+                        <div className="p-4 sm:p-6 lg:p-8">
+                            {children}
+                        </div>
+                    </main>
+                </div>
             </div>
         </SidebarProvider>
       </AuthGuard>
