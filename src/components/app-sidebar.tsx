@@ -5,7 +5,7 @@ import { useAuth, UserRole } from "@/context/auth-context";
 import { SidebarBody, SidebarLink, useSidebar } from "@/components/ui/sidebar";
 import { LayoutDashboard, Car, User, Search, FileText, Users, LogOut, FileClock } from "lucide-react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
