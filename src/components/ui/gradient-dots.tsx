@@ -60,16 +60,10 @@ export function GradientDots({
 					`0px 0px, ${spacing / 2}px ${hexSpacing / 2}px, 800% 400%, 1000% -400%, -1200% -600%, 400% ${hexSpacing}px`,
 					`0px 0px, ${spacing / 2}px ${hexSpacing / 2}px, 0% 0%, 0% 0%, 0% 0%, 0% 0%`,
 				],
-				filter: ['hue-rotate(0deg)', 'hue-rotate(360deg)'],
 			}}
 			transition={{
 				backgroundPosition: {
 					duration: duration,
-					ease: 'linear',
-					repeat: Number.POSITIVE_INFINITY,
-				},
-				filter: {
-					duration: colorCycleDuration,
 					ease: 'linear',
 					repeat: Number.POSITIVE_INFINITY,
 				},
