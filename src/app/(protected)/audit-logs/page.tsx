@@ -38,36 +38,38 @@ type AuditFiltersProps = {
 };
 
 const AuditFilters = ({ details, setDetails, officer, setOfficer, action, setAction, date, setDate, clearFilters }: AuditFiltersProps) => (
-    <div className="flex items-center gap-4 p-4 mb-4 border-b">
-        <div className="flex-1">
+    <div className="flex flex-col md:flex-row items-center gap-4 p-4 mb-4 border-b">
+        <div className="w-full">
              <Input placeholder="Filter by details..." value={details} onChange={(e) => setDetails(e.target.value)} />
         </div>
-        <Select value={officer} onValueChange={setOfficer}>
-            <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Filter by Officer" />
-            </SelectTrigger>
-            <SelectContent>
-                <SelectItem value="all">All Officers</SelectItem>
-                {mockUsers.map(user => <SelectItem key={user.uid} value={user.displayName}>{user.displayName}</SelectItem>)}
-            </SelectContent>
-        </Select>
-         <Select value={action} onValueChange={setAction}>
-            <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Filter by Action" />
-            </SelectTrigger>
-            <SelectContent>
-                 <SelectItem value="all">All Actions</SelectItem>
-                 <SelectItem value="login">Login</SelectItem>
-                 <SelectItem value="upload">Upload</SelectItem>
-                 <SelectItem value="search">Search</SelectItem>
-                 <SelectItem value="view">View</SelectItem>
-            </SelectContent>
-        </Select>
-        <Input type="date" className="w-[180px]" value={date} onChange={(e) => setDate(e.target.value)} />
-        <Button variant="outline" onClick={clearFilters} className="gap-1.5">
-            <X className="h-4 w-4" />
-            Clear
-        </Button>
+        <div className="flex flex-col sm:flex-row w-full gap-4">
+            <Select value={officer} onValueChange={setOfficer}>
+                <SelectTrigger className="w-full sm:w-[180px]">
+                    <SelectValue placeholder="Filter by Officer" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="all">All Officers</SelectItem>
+                    {mockUsers.map(user => <SelectItem key={user.uid} value={user.displayName}>{user.displayName}</SelectItem>)}
+                </SelectContent>
+            </Select>
+            <Select value={action} onValueChange={setAction}>
+                <SelectTrigger className="w-full sm:w-[180px]">
+                    <SelectValue placeholder="Filter by Action" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="all">All Actions</SelectItem>
+                    <SelectItem value="login">Login</SelectItem>
+                    <SelectItem value="upload">Upload</SelectItem>
+                    <SelectItem value="search">Search</SelectItem>
+                    <SelectItem value="view">View</SelectItem>
+                </SelectContent>
+            </Select>
+            <Input type="date" className="w-full sm:w-[180px]" value={date} onChange={(e) => setDate(e.target.value)} />
+            <Button variant="outline" onClick={clearFilters} className="gap-1.5">
+                <X className="h-4 w-4" />
+                Clear
+            </Button>
+        </div>
     </div>
 );
 
