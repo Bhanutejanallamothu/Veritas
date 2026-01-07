@@ -66,7 +66,7 @@ export default function ImageSearchPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file || !reason) {
+    if (!file || !reason || !filePreview) {
         setError("An image and a reason for the search are required.");
         return;
     }
@@ -75,22 +75,13 @@ export default function ImageSearchPage() {
     setResults(null);
 
     try {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = async () => {
-            const base64Image = reader.result as string;
-            const response = await imageBasedVehicleSearch({
-                uploadedImageURL: base64Image,
-                reasonForSearch: reason,
-            });
-            setProgress(100);
-            setSearchStatus("complete");
-            setResults(response);
-        };
-        reader.onerror = () => {
-            setError("Failed to read the image file.");
-            setSearchStatus("error");
-        }
+        const response = await imageBasedVehicleSearch({
+            uploadedImageURL: filePreview,
+            reasonForSearch: reason,
+        });
+        setProgress(100);
+        setSearchStatus("complete");
+        setResults(response);
     } catch (err) {
       setError("An unexpected error occurred during the search.");
       setSearchStatus("error");
