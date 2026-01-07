@@ -89,7 +89,7 @@ export const DesktopSidebar = ({
   return (
     <motion.div
       className={cn(
-        "h-full px-4 py-4 hidden md:flex md:flex-col w-[300px] flex-shrink-0 bg-transparent",
+        "h-full px-4 py-4 hidden md:flex md:flex-col w-[300px] flex-shrink-0 bg-sidebar",
         className
       )}
       animate={{
@@ -135,12 +135,12 @@ export const MobileSidebar = ({
                 ease: "easeInOut",
               }}
               className={cn(
-                "fixed h-full w-full inset-0 p-10 z-[100] flex flex-col justify-between bg-transparent",
+                "fixed h-full w-full inset-0 p-10 z-[100] flex flex-col justify-between bg-sidebar",
                 className
               )}
             >
               <div
-                className="absolute right-10 top-10 z-50 text-neutral-800 dark:text-neutral-200 cursor-pointer"
+                className="absolute right-10 top-10 z-50 text-sidebar-foreground cursor-pointer"
                 onClick={() => setOpen(!open)}
               >
                 <X />
