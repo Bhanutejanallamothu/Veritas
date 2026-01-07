@@ -23,6 +23,8 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
@@ -80,6 +82,9 @@ export default function ReviewSearchesPage() {
                                             />
                                         </DialogTrigger>
                                         <DialogContent className="max-w-4xl">
+                                          <DialogHeader>
+                                            <DialogTitle>Investigation Image: {inv.id}</DialogTitle>
+                                          </DialogHeader>
                                             <Image
                                                 src={inv.uploadedImageURL.replace('/150/100', '/800/600')} // Request larger image
                                                 alt={`Investigation ${inv.id}`}
