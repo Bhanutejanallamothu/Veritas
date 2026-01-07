@@ -1,3 +1,4 @@
+
 "use client";
 
 import {
@@ -19,6 +20,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -62,14 +68,27 @@ export default function ReviewSearchesPage() {
                         {investigations.map((inv) => (
                             <TableRow key={inv.id}>
                                 <TableCell>
-                                    <Image
-                                        src={inv.uploadedImageURL}
-                                        alt={`Investigation ${inv.id}`}
-                                        width={80}
-                                        height={60}
-                                        className="rounded-md object-cover bg-muted"
-                                        data-ai-hint="cctv vehicle"
-                                    />
+                                    <Dialog>
+                                        <DialogTrigger asChild>
+                                            <Image
+                                                src={inv.uploadedImageURL}
+                                                alt={`Investigation ${inv.id}`}
+                                                width={80}
+                                                height={60}
+                                                className="rounded-md object-cover bg-muted cursor-pointer hover:opacity-80 transition-opacity"
+                                                data-ai-hint="cctv vehicle"
+                                            />
+                                        </DialogTrigger>
+                                        <DialogContent className="max-w-4xl">
+                                            <Image
+                                                src={inv.uploadedImageURL.replace('/150/100', '/800/600')} // Request larger image
+                                                alt={`Investigation ${inv.id}`}
+                                                width={800}
+                                                height={600}
+                                                className="rounded-md object-contain"
+                                            />
+                                        </DialogContent>
+                                    </Dialog>
                                 </TableCell>
                                 <TableCell className="max-w-xs truncate">{inv.reasonForSearch}</TableCell>
                                 <TableCell>{inv.uploadedBy}</TableCell>
