@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Upload, FileQuestion, Loader2, AlertTriangle, CheckCircle, Search, Hourglass } from "lucide-react";
+import { Upload, FileQuestion, Loader2, AlertTriangle, CheckCircle, Search, Hourglass, RefreshCw } from "lucide-react";
 import { imageBasedVehicleSearch, type ImageBasedVehicleSearchOutput } from "@/ai/flows/image-based-vehicle-search";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
@@ -128,6 +128,21 @@ export default function ImageSearchPage() {
       setLoading(false);
     }
   };
+
+  const handleReset = () => {
+    setFile(null);
+    setFilePreview(null);
+    setReason("");
+    setLoading(false);
+    setResults(null);
+    setError(null);
+    setSearchStatus("idle");
+    setProgress(0);
+    toast({
+        title: "Form Cleared",
+        description: "The search form and results have been reset.",
+    })
+  }
   
   const SearchLifecycle = () => {
       const CurrentIcon = statusInfo[searchStatus].icon;
@@ -193,7 +208,11 @@ export default function ImageSearchPage() {
             )}
             {loading && <SearchLifecycle />}
           </CardContent>
-          <CardFooter>
+          <CardFooter className="flex gap-2">
+            <Button type="button" variant="outline" onClick={handleReset} className="w-full" disabled={loading}>
+              <RefreshCw className="mr-2 h-4 w-4" />
+              Reset
+            </Button>
             <Button type="submit" disabled={loading || !file || !reason} className="w-full">
               {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Search className="mr-2 h-4 w-4" />}
               {loading ? "Searching..." : "Initiate Search"}
@@ -266,3 +285,5 @@ export default function ImageSearchPage() {
     </div>
   );
 }
+
+    
