@@ -83,7 +83,7 @@ export default function RegisterDriverPage() {
   }
 
   return (
-    <Card>
+    <Card className="bg-card/50">
       <CardHeader>
         <CardTitle>Register New Driver</CardTitle>
         <CardDescription>
