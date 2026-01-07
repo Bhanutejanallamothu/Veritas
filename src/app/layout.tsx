@@ -5,15 +5,10 @@ import './globals.css';
 import { AuthProvider } from '@/context/auth-context';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider, useTheme } from 'next-themes';
-import Squares from '@/components/ui/Squares';
+import { GradientDots } from '@/components/ui/gradient-dots';
 import { useEffect, useState } from 'react';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-
-// export const metadata: Metadata = {
-//   title: 'Veritas Platform',
-//   description: 'Unified Vehicle and Driver Registration and Investigation Assistance Platform',
-// };
 
 function AppLayout({ children }: { children: React.ReactNode }) {
   const { theme } = useTheme();
@@ -26,12 +21,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative">
       {isDark && (
-        <Squares
-          className="absolute inset-0 -z-10 w-full h-full"
-          squareSize={26}
-          borderColor="rgba(153, 153, 153, 0.2)"
-          hoverFillColor="rgba(34, 34, 34, 0.5)"
-        />
+         <GradientDots className="absolute inset-0 -z-10" />
       )}
       <AuthProvider>
         {children}
