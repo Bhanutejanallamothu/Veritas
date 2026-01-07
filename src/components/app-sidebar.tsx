@@ -34,7 +34,7 @@ const Logo = () => {
       className="font-normal flex space-x-2 items-center text-sm text-black dark:text-white py-1 relative z-20"
     >
       <Image 
-        src="https://ik.imagekit.io/bhanuteja110/unnamed%20(1).jpg" 
+        src="https://ik.imagekit.io/bhanuteja110/ChatGPT%20Image%20Jan%206,%202026,%2011_09_33%20PM.png" 
         alt="Veritas Platform Logo"
         width={40}
         height={40}
@@ -58,7 +58,7 @@ const LogoIcon = () => {
       className="font-normal flex space-x-2 items-center text-sm text-black dark:text-white py-1 relative z-20"
     >
       <Image 
-        src="https://ik.imagekit.io/bhanuteja110/unnamed%20(1).jpg" 
+        src="https://ik.imagekit.io/bhanuteja110/ChatGPT%20Image%20Jan%206,%202026,%2011_09_33%20PM.png" 
         alt="Veritas Platform Logo"
         width={40}
         height={40}
