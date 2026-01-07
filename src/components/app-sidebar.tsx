@@ -2,11 +2,10 @@
 
 import Link from "next/link";
 import { useAuth, UserRole } from "@/context/auth-context";
-import { SidebarBody, SidebarLink } from "@/components/ui/sidebar";
+import { SidebarBody, SidebarLink, useSidebar } from "@/components/ui/sidebar";
 import { LayoutDashboard, Car, User, Search, FileText, Users, LogOut, FileClock } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useSidebar } from "./ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 
@@ -103,7 +102,7 @@ export default function AppSidebar() {
                 label: user.displayName,
                 href: "#",
                 icon: (
-                  <Avatar className="h-7 w-7 flex-shrink-0 rounded-full">
+                  <Avatar className="h-7 w-7 flex-shrink-0">
                     <AvatarImage
                         src={`https://avatar.vercel.sh/${user.email}.png`}
                     />
