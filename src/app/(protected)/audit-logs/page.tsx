@@ -1,3 +1,4 @@
+
 "use client";
 
 import {
@@ -57,7 +58,7 @@ export default function AuditLogsPage() {
     const logs = mockAuditLogs;
 
     return (
-        <Card>
+        <Card className="bg-card/50">
             <CardHeader>
                 <CardTitle>System Audit Logs</CardTitle>
                 <CardDescription>
