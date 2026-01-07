@@ -53,7 +53,7 @@ export default function ReviewSearchesPage() {
     }
 
     return (
-        <Card>
+        <Card className="bg-card/50">
             <CardHeader>
                 <CardTitle>Review Investigation Searches</CardTitle>
                 <CardDescription>
